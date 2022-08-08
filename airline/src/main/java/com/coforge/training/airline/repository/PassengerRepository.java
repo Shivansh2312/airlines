@@ -11,5 +11,6 @@ public interface PassengerRepository extends JpaRepository<Passenger, Long> {
 	
 	public Optional<Passenger> findByEmail(String email);
 
+
 }
    

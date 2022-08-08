@@ -58,41 +58,36 @@ public class LoginRestController {
 	
 	// Note: Have to change the return type to Boolean and return variable 'a';
 	@PostMapping("/login_user")
-	public String loginPassenger(@Validated @RequestBody Passenger passenger) throws ResourceNotFoundException
+	public Boolean loginPassenger(@Validated @RequestBody Passenger passenger) throws ResourceNotFoundException
 	{
 		Boolean a=false;
 
 		String email = passenger.getEmail();
 		String password = passenger.getPass();
-		//System.out.println("the password of passenger is: "+passenger.getPass());
+		System.out.println("the password of passenger is: "+passenger.getPass());
 		
 		Passenger p = lrservice.loginPassenger(email).orElseThrow(() ->
 		new ResourceNotFoundException("Passenger not found for this id :: "));
-		System.out.println(p.getEmail() +" "+ p.getPass() );
+		System.out.println(p.getEmail() +" "+ p.getPass());
 
 		if(email.equals(p.getEmail()) && password.equals(p.getPass()))
 		{
 			a=true;
 		}
-		if(a==true)
-			return "Login Successful!";
-		else
-			return "Invalid Password";
+		return a;
+//		if(a==true)
+//			return "Login Successful!";
+//		else
+//			return "Invalid Password";
 	}
-    private String encryptPass(String pass) {
-    	Base64.Encoder encoder = Base64.getEncoder();
-    	String normalString = pass;
-    	String encodedString = encoder.encodeToString(
-    	normalString.getBytes(StandardCharsets.UTF_8) );
-    	return encodedString;
-    	}
 	
 	@PostMapping("/admin_login")
-	public String adminLogin(@Validated @RequestBody Admin adm) throws ResourceNotFoundException
+	public Boolean adminLogin(@Validated @RequestBody Admin adm) throws ResourceNotFoundException
 	{
 		Boolean a = false;
 		String admin_email = "srishiv@gmail.com";
 		String admin_pass = "shiv54";
+
 		
 		String email = adm.getAdmin_email();
 		String pass = adm.getAdmin_pass();
@@ -102,11 +97,11 @@ public class LoginRestController {
 		{
 			a = true;
 		}
-		if(a==true)
-			return "Admin Login Successful!";
-		else
-			return "Invalid Fields";
-		
+		return a;
+//		if(a==true)
+//			return "Admin Login Successful!";
+//		else
+//			return "Invalid Fields";
 	}
 
 

@@ -2,6 +2,7 @@ package com.coforge.training.airline.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +19,7 @@ public class Flight {
 	    @GeneratedValue(strategy=GenerationType.IDENTITY)
 	    private long flightId;
 	    
+	    @Column(unique = true)
 	    private String flightNumber;
 	   
 	    private  String departureAirport;
@@ -143,8 +145,6 @@ public class Flight {
 		public void setFlightCharge(double flightCharge) {
 			this.flightCharge = flightCharge;
 		}
-
-
 
 		@Override
 		public String toString() {
