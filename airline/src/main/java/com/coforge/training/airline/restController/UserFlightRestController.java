@@ -25,7 +25,7 @@ public class UserFlightRestController {
 //	Open Postman and Give GET request :- 
 //	http://localhost:8085/airline/api/user/search_flight/Chennai/Banglore/2022-09-21
 	
-	@GetMapping("search_flight/{departureAirport}/{destinationAirport}/{departureDate}")
+	@GetMapping("/search_flight/{departureAirport}/{destinationAirport}/{departureDate}")
 	public ResponseEntity<List<Flight>> getAvailableFlights(@PathVariable String departureAirport, @PathVariable String destinationAirport, @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate departureDate)
 	{
 		return new ResponseEntity<>(ufservice.userGetFlight(departureAirport, destinationAirport, departureDate), HttpStatus.OK);
