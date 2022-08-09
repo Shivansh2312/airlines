@@ -1,6 +1,5 @@
 package com.coforge.training.airline.service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,13 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.coforge.training.airline.model.Flight;
-import com.coforge.training.airline.model.Passenger;
 import com.coforge.training.airline.repository.FlightRepository;
-
 
 @Service
 @Transactional
-public class FlightRestService {
+public class AdminFlightRestService {
 
 	@Autowired
 	private FlightRepository fRepo;
@@ -39,5 +36,4 @@ public class FlightRestService {
 	public void deleteFlightById(long flightId) {
 		fRepo.deleteById(flightId);
 	}
-	
 }

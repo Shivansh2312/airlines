@@ -16,7 +16,4 @@ public class Admin {
 	public void setAdmin_pass(String admin_pass) {
 		this.admin_pass = admin_pass;
 	}
-	
-	
-
 }

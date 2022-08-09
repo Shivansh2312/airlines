@@ -17,7 +17,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="passenger")
-public class Passenger {
+public class User {
 	
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -120,8 +120,6 @@ public class Passenger {
         this.cpass = encodedString;
 	}*/
 
-
-
 	public Date getDob() {
 		return dob;
 	}
@@ -137,9 +135,4 @@ public class Passenger {
 	public void setContactNo(String contactNo) {
 		this.contactNo = contactNo;
 	}
-
-    
-    
-    
-
 }

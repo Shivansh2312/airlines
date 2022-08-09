@@ -1,14 +1,15 @@
 package com.coforge.training.airline.service;
 
 import java.util.List;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.coforge.training.airline.model.Passenger;
-import com.coforge.training.airline.repository.PassengerRepository;
+import com.coforge.training.airline.model.User;
+import com.coforge.training.airline.repository.UserRepository;
 
 
 @Service
@@ -16,26 +17,19 @@ import com.coforge.training.airline.repository.PassengerRepository;
 public class LoginRestService {
 	
 	@Autowired
-	private PassengerRepository prepo;
+	private UserRepository urepo;
 	
-	public Passenger registerPassenger(Passenger passenger) {
-		return prepo.save(passenger);
+	public User registerUser(User user) {
+		return urepo.save(user);
 	}
 	
 	@Autowired
-	public List<Passenger> getAllPassenger(){
-		return prepo.findAll();
+	public List<User> getAllUser(){
+		return urepo.findAll();
 	}
 	
-	public Optional<Passenger> loginPass(String email)
+	public Optional<User> loginUser(String email)
 	{
-		return prepo.findByEmail(email);
+		return urepo.findByEmail(email);
 	}
-	
-	public Optional<Passenger> loginPassenger(String email)
-	{
-		return prepo.findByEmail(email);
-	}
-	
-
 }

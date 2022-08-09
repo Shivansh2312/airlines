@@ -1,13 +1,7 @@
 package com.coforge.training.airline.restController;
-
-import java.time.LocalDate;
 import java.util.HashMap;
-
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-
-import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,39 +17,36 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.coforge.training.airline.exception.ResourceNotFoundException;
 import com.coforge.training.airline.model.Flight;
-import com.coforge.training.airline.model.Passenger;
-import com.coforge.training.airline.service.FlightRestService;
+import com.coforge.training.airline.service.AdminFlightRestService;
 
 
 @RestController
 @RequestMapping(value= "api/admin_login")
-public class FlightRestController {
+public class AdminFlightRestController {
 
 	@Autowired
-	private FlightRestService fservice;
-	private String departureAirport;
+	private AdminFlightRestService afservice;
 
-	//Open PostMan , make a GET request- http://localhost:8085/airline/api/flights
+	//Open PostMan , make a GET request- http://localhost:8085/airline/api/all_flights
 	@GetMapping("/all_flights")
 	public List<Flight>getAllFlights () {
-		return fservice.listAll();  
+		return afservice.listAll();  
 	}
 
-
-	//Open PostMan , make a Post request- http://localhost:8085/airline/api/flights/
-	@PostMapping("/add_flight")
+	//Open PostMan , make a Post request- http://localhost:8085/airline/api/all_flights
+	@PostMapping("/all_flights")
 	public ResponseEntity<Flight> saveFlight(@Validated @RequestBody Flight flight) {
 
-		Flight p= fservice.saveFlight(flight)  ;
+		Flight p= afservice.saveFlight(flight)  ;
 		return ResponseEntity.ok(p);
-
 	}
-
+	
+	//Open PostMan , make a PUT request- http://localhost:8085/airline/api//update_flight/{id}
 	@PutMapping("/update_flight/{id}")
 	public ResponseEntity<Flight> updateFlight(@PathVariable(value = "id") Long pId,
 			@Validated @RequestBody Flight f) throws ResourceNotFoundException {
 
-		Flight flight = fservice.getSingleFlight(pId)
+		Flight flight = afservice.getSingleFlight(pId)
 				.orElseThrow(() -> new ResourceNotFoundException("Product not found for this id :: " + pId));
 
 
@@ -68,7 +59,7 @@ public class FlightRestController {
 		flight.setArrivalTime(f.getArrivalTime());
 		flight.setCabin(f.getCabin());
 		flight.setFlightCharge(f.getFlightCharge());
-		final Flight updatedFlight = fservice.saveFlight(flight);
+		final Flight updatedFlight = afservice.saveFlight(flight);
 		return ResponseEntity.ok(updatedFlight);
 	}
 
@@ -80,11 +71,10 @@ public class FlightRestController {
 	public Map<String, Boolean> deleteFlight(@PathVariable(value = "flightId") Long pId)
 			throws ResourceNotFoundException{
 
-		fservice.deleteFlightById(pId);
+		afservice.deleteFlightById(pId);
 
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("deleted", Boolean.TRUE);
 		return response;
 	}
-	
 }

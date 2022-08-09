@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 	
-@Entity
+@Entity(name = "flight")
 @Table(name="flight")
 public class Flight {
 	

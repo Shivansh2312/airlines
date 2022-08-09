@@ -1,6 +1,7 @@
 package com.coforge.training.airline.restController;
 
 import java.nio.charset.StandardCharsets;
+
 import java.util.Base64;
 import java.util.List;
 
@@ -17,10 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.coforge.training.airline.exception.ResourceNotFoundException;
 import com.coforge.training.airline.model.Admin;
-import com.coforge.training.airline.model.Passenger;
+import com.coforge.training.airline.model.User;
 import com.coforge.training.airline.service.LoginRestService;
-
-
 
 @RestController
 @CrossOrigin(origins="http://localhost:4200")
@@ -33,44 +32,44 @@ public class LoginRestController {
 	//Open Postman and make POST request - http://localhost:8085/airline/api/passenger
 	//Under body tab --> raw --> Text --> Json and type the json data to be saved
 	@PostMapping("/register_users")
-	public Passenger createPassenger(@Validated @RequestBody Passenger passenger) {
-		Passenger p = new Passenger();
-		p.setTitle(passenger.getTitle());
-		p.setFname(passenger.getFname());
-		p.setLname(passenger.getLname());
-		p.setEmail(passenger.getEmail());
-		p.setPass(passenger.getPass());
-		p.setCpass(passenger.getCpass());
-		p.setDob(passenger.getDob());
-		p.setContactNo(passenger.getContactNo());
+	public User createPassenger(@Validated @RequestBody User user) {
+		User u = new User();
+		u.setTitle(user.getTitle());
+		u.setFname(user.getFname());
+		u.setLname(user.getLname());
+		u.setEmail(user.getEmail());
+		u.setPass(user.getPass());
+		u.setDob(user.getDob());
+		u.setCpass(user.getCpass());
+		u.setContactNo(user.getContactNo());
 
-		p = lrservice.registerPassenger(p);
-		return passenger;
+		u = lrservice.registerUser(u);
+		return user;
 	}
 
-	//Open Postman and make GET request - http://localhost:8085/airline/api/passenger
+	//Open Postman and make GET request - http://localhost:8085/airline/api/register_users
 	@GetMapping("/register_users")
-	public List<Passenger> getAllPassenger(){
-		return lrservice.getAllPassenger();
+	public List<User> getAllUser(){
+		return lrservice.getAllUser();
 	}
 
-	//Open Postman and make POST request - http://localhost:8085/airline/api/passenger
+	//Open Postman and make POST request - http://localhost:8085/airline/api/login_user
 	
 	// Note: Have to change the return type to Boolean and return variable 'a';
 	@PostMapping("/login_user")
-	public Boolean loginPassenger(@Validated @RequestBody Passenger passenger) throws ResourceNotFoundException
+	public Boolean loginUser(@Validated @RequestBody User user) throws ResourceNotFoundException
 	{
 		Boolean a=false;
 
-		String email = passenger.getEmail();
-		String password = passenger.getPass();
-		System.out.println("the password of passenger is: "+passenger.getPass());
+		String email = user.getEmail();
+		String password = user.getPass();
+		System.out.println("the password of passenger is: "+user.getPass());
 		
-		Passenger p = lrservice.loginPassenger(email).orElseThrow(() ->
-		new ResourceNotFoundException("Passenger not found for this id :: "));
-		System.out.println(p.getEmail() +" "+ p.getPass());
+		User u = lrservice.loginUser(email).orElseThrow(() ->
+		new ResourceNotFoundException("User not found for this id :: "));
+		System.out.println(u.getEmail() +" "+ u.getPass());
 
-		if(email.equals(p.getEmail()) && password.equals(p.getPass()))
+		if(email.equals(u.getEmail()) && password.equals(u.getPass()))
 		{
 			a=true;
 		}
