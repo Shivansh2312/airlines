@@ -29,8 +29,8 @@ public class AdminFlightRestService {
 		return fRepo.save(flight);
 	}
 
-	public Optional<Flight> getSingleFlight(long id) {
-		return fRepo.findById(id);  // defined in JPA repo
+	public Optional<Flight> getSingleFlight(long flightId) {
+		return fRepo.findById(flightId);  // defined in JPA repo
 	}
 
 	public void deleteFlightById(long flightId) {

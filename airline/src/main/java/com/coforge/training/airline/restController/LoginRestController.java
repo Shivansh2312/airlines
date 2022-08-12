@@ -22,16 +22,16 @@ import com.coforge.training.airline.model.User;
 import com.coforge.training.airline.service.LoginRestService;
 
 @RestController
-@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin(origins="http://localhost:3000")
 @RequestMapping(value="/api")
 public class LoginRestController {
 
 	@Autowired
 	private LoginRestService lrservice;
 
-	//Open Postman and make POST request - http://localhost:8085/airline/api/passenger
+	//Open Postman and make POST request - http://localhost:8085/airline/api/register_user
 	//Under body tab --> raw --> Text --> Json and type the json data to be saved
-	@PostMapping("/register_users")
+	@PostMapping("/register_user")
 	public User createPassenger(@Validated @RequestBody User user) {
 		User u = new User();
 		u.setTitle(user.getTitle());
@@ -39,8 +39,8 @@ public class LoginRestController {
 		u.setLname(user.getLname());
 		u.setEmail(user.getEmail());
 		u.setPass(user.getPass());
-		u.setDob(user.getDob());
 		u.setCpass(user.getCpass());
+		u.setDob(user.getDob());
 		u.setContactNo(user.getContactNo());
 
 		u = lrservice.registerUser(u);

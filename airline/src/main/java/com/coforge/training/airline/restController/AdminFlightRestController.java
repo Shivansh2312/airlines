@@ -1,11 +1,13 @@
 package com.coforge.training.airline.restController;
 import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,8 +22,10 @@ import com.coforge.training.airline.model.Flight;
 import com.coforge.training.airline.service.AdminFlightRestService;
 
 
+
 @RestController
 @RequestMapping(value= "api/admin_login")
+@CrossOrigin(origins="http://localhost:3000")
 public class AdminFlightRestController {
 
 	@Autowired
@@ -32,9 +36,17 @@ public class AdminFlightRestController {
 	public List<Flight>getAllFlights () {
 		return afservice.listAll();  
 	}
+	
+	@GetMapping("/all_flights/{id}")
+    public ResponseEntity<Flight> getFlightById(@PathVariable(value = "id") Long flightId)
+       throws ResourceNotFoundException {
+		Flight flight = afservice.getSingleFlight(flightId)
+           .orElseThrow(() -> new ResourceNotFoundException("Product not found for this id :: " + flightId));
+   return ResponseEntity.ok().body(flight);
+}
 
 	//Open PostMan , make a Post request- http://localhost:8085/airline/api/all_flights
-	@PostMapping("/all_flights")
+	@PostMapping("/add_flight")
 	public ResponseEntity<Flight> saveFlight(@Validated @RequestBody Flight flight) {
 
 		Flight p= afservice.saveFlight(flight)  ;
